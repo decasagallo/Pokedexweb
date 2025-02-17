@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pokedexweb</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Enlace al archivo CSS externo -->
+</head>
+<body>
+<div class="logo-container">
+    <img src="/images/pokedex-logo.png" alt="Pokedex Logo" class="logo">
+</div>
+
+<div class="container">
+    <h1></h1>
+
+    <!-- Contenedor de filtros -->
+    <div class="filters-container">
+        <!-- Filtro por generación -->
+        <div class="filter-item">
+            <label for="generationFilter" class="filter-label">Filtrar por generación:</label>
+            <select id="generationFilter" onchange="filterByGeneration()" class="filter-select">
+                <option value="">Selecciona una generación</option>
+                <option value="1">Generación 1</option>
+                <option value="2">Generación 2</option>
+                <option value="3">Generación 3</option>
+                <option value="4">Generación 4</option>
+                <option value="5">Generación 5</option>
+                <option value="6">Generación 6</option>
+                <option value="7">Generación 7</option>
+                <option value="8">Generación 8</option>
+                <option value="9">Generación 9</option>
+            </select>
+        </div>
+
+        <!-- Filtro por nombre -->
+        <div class="filter-item">
+            <label for="nameFilter" class="filter-label">Filtrar por nombre:</label>
+            <input type="text" id="nameFilter" oninput="filterByName()" class="filter-input" placeholder="Buscar Pokémon por nombre">
+        </div>
+
+
+        <!-- Filtro por tipo -->
+        <div class="filter-item">
+            <label for="typeFilter" class="filter-label">Filtrar por tipo:</label>
+            <select id="typeFilter" onchange="filterByType()" class="filter-select">
+                <option value="">Selecciona un tipo</option>
+                <option value="normal">Normal</option>
+                <option value="fighting">Lucha</option>
+                <option value="flying">Volador</option>
+                <option value="poison">Veneno</option>
+                <option value="ground">Tierra</option>
+                <option value="rock">Roca</option>
+                <option value="bug">Bicho</option>
+                <option value="ghost">Fantasma</option>
+                <option value="steel">Acero</option>
+                <option value="fire">Fuego</option>
+                <option value="water">Agua</option>
+                <option value="grass">Planta</option>
+                <option value="electric">Eléctrico</option>
+                <option value="psychic">Psíquico</option>
+                <option value="ice">Hielo</option>
+                <option value="dragon">Dragón</option>
+                <option value="dark">Siniestro</option>
+                <option value="fairy">Hada</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Tabla de Pokémon -->
+        <div class="table-container">
+            <table id="pokemonTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Altura</th>
+                    <th>Peso</th>
+                    <th>Generación</th>
+                    <th>Tipos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pokemon, iterStat : ${pokemons}"
+                    th:attr="onclick=|showPokemonDetails(this)|"
+                    th:data-id="${pokemon.id}"
+                    th:data-name="${pokemon.name}"
+                    th:data-height="${pokemon.height}"
+                    th:data-weight="${pokemon.weight}"
+                    th:data-generation="${'generation-' + pokemon.generation}"
+                    th:data-types="${pokemon.getTypeNames()}"
+                    th:data-img="${pokemon.sprite}"
+                    th:classappend="${iterStat.first} ? 'first-pokemon' : ''">
+
+                    <td th:text="${pokemon.id}"></td>
+                    <td th:text="${pokemon.name}"></td>
+                    <td th:text="${pokemon.height}"></td>
+                    <td th:text="${pokemon.weight}"></td>
+                    <td th:text="${pokemon.generation}"></td>
+                    <td th:text="${pokemon.getTypeNames()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Cuadro de detalles del Pokémon -->
+        <div class="details-container">
+            <div class="pokemon-details">
+                <p id="pokemonName">Selecciona un Pokémon</p>
+                <img id="pokemonSprite" src="" alt="Imagen del Pokémon">
+                <div id="pokemonHeight">Altura: </div>
+                <div id="pokemonWeight">Peso: </div>
+                <div id="pokemonGeneration">Generación: </div>
+                <div id="pokemonTypes">Tipos: </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const firstPokemonRow = document.querySelector(".first-pokemon");
+        if (firstPokemonRow) {
+            showPokemonDetails(firstPokemonRow);
+        }
+    });
+
+    function showPokemonDetails(row) {
+        const pokemonName = row.getAttribute("data-name");
+        const pokemonSprite = row.getAttribute("data-img");
+        const pokemonHeight = row.getAttribute("data-height");
+        const pokemonWeight = row.getAttribute("data-weight");
+        const pokemonGeneration = row.getAttribute("data-generation");
+        const pokemonTypes = row.getAttribute("data-types");
+
+        const spriteElement = document.getElementById('pokemonSprite');
+        spriteElement.src = pokemonSprite ? pokemonSprite : "/images/default-image.png";
+
+        const nameElement = document.getElementById('pokemonName');
+        nameElement.textContent = pokemonName;
+
+        const heightElement = document.getElementById('pokemonHeight');
+        heightElement.textContent = `Altura: ${pokemonHeight} m`;
+
+        const weightElement = document.getElementById('pokemonWeight');
+        weightElement.textContent = `Peso: ${pokemonWeight} kg`;
+
+        const generationElement = document.getElementById('pokemonGeneration');
+        generationElement.textContent = `Generación: ${pokemonGeneration.replace('generation-', '')}`;
+
+        const typesElement = document.getElementById('pokemonTypes');
+        typesElement.textContent = `Tipos: ${pokemonTypes}`;
+    }
+
+    function filterByGeneration() {
+        const selectedGeneration = document.getElementById("generationFilter").value;
+        const rows = document.querySelectorAll("#pokemonTable tbody tr");
+
+        rows.forEach(row => {
+            const generation = row.getAttribute("data-generation");
+            if (selectedGeneration === "" || generation.includes(selectedGeneration)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function filterByType() {
+        const selectedType = document.getElementById("typeFilter").value;
+        const rows = document.querySelectorAll("#pokemonTable tbody tr");
+
+        rows.forEach(row => {
+            const types = row.getAttribute("data-types").split(","); // Asumiendo que los tipos se almacenan separados por coma
+            if (selectedType === "" || types.includes(selectedType)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+
+    function filterByName() {
+        const nameQuery = document.getElementById("nameFilter").value.toLowerCase();
+        const rows = document.querySelectorAll("#pokemonTable tbody tr");
+
+        rows.forEach(row => {
+            const pokemonName = row.getAttribute("data-name").toLowerCase();
+            if (pokemonName.includes(nameQuery)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+
+
+</script>
+
+</body>
+</html>
+<!-- Pie de página -->
+<div class="footer">
+    <span class="icon">&#169;</span> Pokédex Web 2025
+</div>

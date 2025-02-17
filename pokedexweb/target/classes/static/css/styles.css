@@ -1,0 +1,214 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('/images/pokedex-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;  /* Evitar que se desborde el contenido fuera de la vista */
+}
+
+.logo-container {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.logo {
+    max-width: 300px;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: rgba(85, 30, 150, 0.8);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0;
+
+    max-height: 70vh;
+    overflow: visible;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Espacio debajo del contenedor de los filtros y la tabla */
+}
+
+.table-container {
+    width: 65%;
+    max-height: 400px;  /* Hacer el cuadro de la tabla con scroll */
+    overflow-y: auto;
+    background-color: rgba(85, 30, 150, 0.8);
+    border-radius: 10px;
+}
+
+.details-container {
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0);  /* Fondo completamente transparente */
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    color: white;
+}
+
+th {
+    background-color: rgba(60, 0, 120, 0.9);
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+td {
+    background-color: rgba(85, 30, 150, 0.7);
+}
+
+td img {
+    border-radius: 5px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(85, 30, 150, 0.8);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgba(85, 30, 150, 0.9);
+}
+
+/* Estilos del cuadro lateral */
+.pokemon-details {
+    display: block;
+    text-align: center;
+}
+
+.pokemon-details p {
+    margin: 10px 0;
+    color: #1A0026;
+    font-size: 39px;
+    font-weight: bold;
+}
+
+.pokemon-details img {
+    width: 180px;
+    height: 180px;
+    border-radius: 10px;
+}
+
+.pokemon-details div {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #000000; /* Hace la letra más negra */
+    font-weight: bold; /* Aplica negrita */
+}
+
+/* Contenedor de filtros alineados */
+.filters-container {
+    display: flex;
+    gap: 20px; /* Espaciado entre filtros */
+    align-items: center;
+    justify-content: center; /* Centra los filtros */
+    margin-bottom: 15px; /* Espacio debajo de los filtros */
+}
+
+/* Estilo para el filtro */
+.filter-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.filter-label {
+    font-size: 18px;
+    margin-right: 10px;
+    color: white;
+}
+
+.filter-select {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid rgba(85, 30, 150, 0.8);
+    background-color: rgba(85, 30, 150, 0.9);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-select:hover {
+    background-color: rgba(85, 30, 150, 1);
+    border-color: rgba(85, 30, 150, 0.9);
+}
+
+.filter-select option {
+    background-color: rgba(85, 30, 150, 0.7);
+    color: white;
+}
+
+.filter-select option:hover {
+    background-color: rgba(85, 30, 150, 0.8);
+}
+
+/* Ajuste de espacio entre filtros */
+.filter-container {
+    margin: 10px;
+    display: inline-block;
+}
+
+.filter-label {
+    font-size: 16px;
+    color: white;
+    margin-right: 10px;
+}
+
+.filter-select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid rgba(85, 30, 150, 0.8);
+    background-color: rgba(85, 30, 150, 0.9);
+    color: white;
+}
+
+.filter-select:hover {
+    background-color: rgba(85, 30, 150, 1);
+}
+
+/* Estilos del pie de página */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    text-align: center;
+    padding: 10px 0;
+    color: yellow;
+    text-shadow: -1px -1px 0 purple, 1px -1px 0 purple, -1px 1px 0 purple, 1px 1px 0 purple; /* Borde morado */
+    font-family: 'Arial', sans-serif; /* Cambia la fuente si quieres otra */    font-size: 16px;
+    font-weight: bold;
+    z-index: 1000; /* Asegura que el pie de página esté encima del contenido */
+}
+
+.footer .icon {
+    font-size: 20px;
+    margin-right: 8px;
+    color: #FFD700; /* Color dorado para el ícono */
+}
